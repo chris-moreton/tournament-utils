@@ -78,10 +78,7 @@ class Schedule
             $this->matchNum ++;
         } while ($player1 == null || $player2 == null);
         
-        return [
-            'player1' => $player1,
-            'player2' => $player2,
-        ];
+        return [$player1, $player2];
     }
 }
 
