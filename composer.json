@@ -1,0 +1,17 @@
+{
+    "name": "chris-moreton/tournament-utils",
+    "description": "Utilities for managing tournaments, particularly engine v engine tournaments",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "~2.0"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {"Netsensia\\Tournament\\": "src/Netsensia/Tournament/"}
+    }
+}
