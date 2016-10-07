@@ -8,37 +8,23 @@ class Schedule
     private $matchNum = 0;
     private $matchesPerRound;
     private $numPlayers;
+    private $roundNum = 1;
     
+    /**
+     * @return the $roundNum
+     */
+    public function getRoundNum()
+    {
+        return $this->roundNum;
+    }
+
     /**
      * @param number $numPlayers
      */
     public function __construct($numPlayers)
     {
         $this->numPlayers = $numPlayers;
-        
-        if ($numPlayers % 2 == 1) {
-            $numPlayers ++;
-            $includeDummyPlayer = true;
-        } else {
-            $includeDummyPlayer = false;
-        }
-        
-        $half = $numPlayers / 2;
-        
-        for ($i=1; $i<=$half; $i++) {
-            $this->player1Array[] = $i;
-        }
-        
-        for ($i=$numPlayers; $i>$half; $i--) {
-            $this->player2Array[] = $i;
-        }
-        
-        if ($includeDummyPlayer) {
-            $this->player2Array[0] = null;
-        }
-        
-        $this->matchesPerRound = $half;
-        
+        $this->reset();
     }
     
     /**
@@ -52,9 +38,53 @@ class Schedule
      * 1 8 2 3
      * 7 6 5 4
      */
-    private function rotate()
+    protected function rotate()
     {
+        if ($this->matchesPerRound > 1) {
+            
+            $bottomLeft = $this->player2Array[0];
+            
+            for ($i=0; $i<$this->matchesPerRound-1; $i++) {
+                $this->player2Array[$i] = $this->player2Array[$i+1];
+            }
+            
+            $this->player2Array[$this->matchesPerRound-1] = $this->player1Array[$this->matchesPerRound-1];
+            
+            for ($i=$this->matchesPerRound-1; $i>1; $i--) {
+                $this->player1Array[$i] = $this->player1Array[$i-1];
+            }
+            
+            $this->player1Array[1] = $bottomLeft;
+        }
+    }
+    
+    /**
+     * Reset the tournament to the start
+     */
+    public function reset()
+    {
+        if ($this->numPlayers % 2 == 1) {
+            $this->numPlayers ++;
+            $includeDummyPlayer = true;
+        } else {
+            $includeDummyPlayer = false;
+        }
         
+        $this->matchesPerRound = $this->numPlayers / 2;
+        
+        for ($i=1; $i<=$this->matchesPerRound; $i++) {
+            $this->player1Array[] = $i;
+        }
+        
+        for ($i=$this->numPlayers; $i>$this->matchesPerRound; $i--) {
+            $this->player2Array[] = $i;
+        }
+        
+        if ($includeDummyPlayer) {
+            $this->player2Array[0] = 0;
+        }
+        
+        $this->roundNum = 1;
     }
     
     /**
@@ -65,20 +95,24 @@ class Schedule
     public function getNextPairing()
     {
         if ($this->matchNum == $this->matchesPerRound) {
+            $this->roundNum ++;
+            $this->matchNum = 0;
             $this->rotate();
-            if ($this->player2Array[0] == $this->numPlayers-1) {
+            if ($this->player2Array[0] == $this->numPlayers) {
                 // back where we started
                 return null;
             }
         }
         
-        do {
-            $player1 = $this->player1Array[$this->matchNum];
-            $player2 = $this->player2Array[$this->matchNum];
-            $this->matchNum ++;
-        } while ($player1 == null || $player2 == null);
+        $player1 = $this->player1Array[$this->matchNum];
+        $player2 = $this->player2Array[$this->matchNum];
+        $this->matchNum ++;
         
-        return [$player1, $player2];
+        if ($player1 == 0 || $player2 == 0) {
+            return $this->getNextPairing();
+        } else {
+            return [$player1, $player2];
+        }
     }
 }
 
