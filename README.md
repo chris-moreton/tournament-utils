@@ -8,7 +8,7 @@ Currently Round Robin is the only one I've written.
 
 From the root of your application
 
-    composer require chris-moreton/uci-chess
+    composer require chris-moreton/tournament-utils
     
 Unless using a framework where autoloading is already taken care of, you'll need to
 
