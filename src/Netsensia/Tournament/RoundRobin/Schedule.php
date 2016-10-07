@@ -98,7 +98,8 @@ class Schedule
             $this->roundNum ++;
             $this->matchNum = 0;
             $this->rotate();
-            if ($this->player2Array[0] == $this->numPlayers) {
+            if ($this->player2Array[0] == $this->numPlayers ||
+                $this->player2Array[0] == 0) {
                 // back where we started
                 return null;
             }

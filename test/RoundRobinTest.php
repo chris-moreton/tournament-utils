@@ -106,6 +106,25 @@ class RoundRobinTest extends \PHPUnit_Framework_TestCase
 	public function testEndOfTournament()
 	{
 	    /*
+	     * 1 2 3|1 - 2|1 5 -|1 4 5|1 3 4|1 2 3 <- Back where we started
+	     * - 5 4|5 4 3|4 3 2|3 2 -|2 - 5|- 5 4
+	     */
+	    $t = new RoundRobinSchedulePublicator(5);
+	    $this->assertSame([2,5], $t->getNextPairing());
+	    $this->assertSame([3,4], $t->getNextPairing());
+	    $this->assertSame([1,5], $t->getNextPairing());
+	    $this->assertSame([2,3], $t->getNextPairing());
+	    $this->assertSame([1,4], $t->getNextPairing());
+	    $this->assertSame([5,3], $t->getNextPairing());
+	    $this->assertSame([1,3], $t->getNextPairing());
+	    $this->assertSame([4,2], $t->getNextPairing());
+	    $this->assertSame([1,2], $t->getNextPairing());
+	    $this->assertSame([4,5], $t->getNextPairing());
+	     
+	    $this->assertSame(null, $t->getNextPairing());
+	    
+	    
+	    /*
 	     * 1 2 3|1 6 2|1 5 6|1 4 5|1 3 4|1 2 3 <- Back where we started
 	     * 6 5 4|5 4 3|4 3 2|3 2 6|2 6 5|6 5 4
 	     */
@@ -127,8 +146,7 @@ class RoundRobinTest extends \PHPUnit_Framework_TestCase
 	    $this->assertSame([4,5], $t->getNextPairing());
 	    
 	    $this->assertSame(null, $t->getNextPairing());
-	     
-	     
+  
 	}
 }
 
