@@ -25,16 +25,16 @@ class Schedule
         
         $half = $numPlayers / 2;
         
-        for ($i=0; $i<$half; $i++) {
-            $player1Array[] = $i;
+        for ($i=1; $i<=$half; $i++) {
+            $this->player1Array[] = $i;
         }
         
-        for ($i=$numPlayers-1; $i>=0; $i--) {
-            $player2Array[] = $i;
+        for ($i=$numPlayers; $i>$half; $i--) {
+            $this->player2Array[] = $i;
         }
         
         if ($includeDummyPlayer) {
-            $player1Array[0] = null;
+            $this->player2Array[0] = null;
         }
         
         $this->matchesPerRound = $half;
@@ -76,7 +76,7 @@ class Schedule
             $player1 = $this->player1Array[$this->matchNum];
             $player2 = $this->player2Array[$this->matchNum];
             $this->matchNum ++;
-        } while ($player1 == null); // if there is null player it will never be player 2
+        } while ($player1 == null || $player2 == null);
         
         return [
             'player1' => $player1,
