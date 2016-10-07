@@ -15,15 +15,17 @@ Currently Round Robin is the only one I've written.
      
     $t = new Netsensia\Tournament\RoundRobin\Schedule(5);
     
-    $this->assertSame([2,5], $t->getNextPairing());
-    $this->assertSame([3,4], $t->getNextPairing());
-    $this->assertSame([1,5], $t->getNextPairing());
-    $this->assertSame([2,3], $t->getNextPairing());
-    $this->assertSame([1,4], $t->getNextPairing());
-    $this->assertSame([5,3], $t->getNextPairing());
-    $this->assertSame([1,3], $t->getNextPairing());
-    $this->assertSame([4,2], $t->getNextPairing());
-    $this->assertSame([1,2], $t->getNextPairing());
-    $this->assertSame([4,5], $t->getNextPairing());
+    // [player1, player2, round_number]
+    
+    [2,5,1] == $t->getNextPairing();
+    [3,4,1] == $t->getNextPairing();
+    [1,5,2] == $t->getNextPairing();
+    [2,3,2] == $t->getNextPairing();
+    [1,4,3] == $t->getNextPairing();
+    [5,3,3] == $t->getNextPairing();
+    [1,3,4] == $t->getNextPairing();
+    [4,2,4] == $t->getNextPairing();
+    [1,2,5] == $t->getNextPairing();
+    [4,5,5] == $t->getNextPairing();
      
-    $this->assertSame(null, $t->getNextPairing());
+    null == $t->getNextPairing();

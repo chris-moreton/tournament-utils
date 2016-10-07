@@ -13,48 +13,48 @@ class RoundRobinTest extends \PHPUnit_Framework_TestCase
 	     * 2
 	     */
 	    $t = new Schedule(2);
-	    $this->assertSame([1, 2], $t->getNextPairing());
+	    $this->assertSame([1,2,1], $t->getNextPairing());
 	    
 	    /*
 	     * 1 2
 	     * - 3
 	     */
 	    $t = new Schedule(3);
-	    $this->assertSame([2, 3], $t->getNextPairing());
+	    $this->assertSame([2,3,1], $t->getNextPairing());
 	    
 	    /*
 	     * 1 2
 	     * 4 3
 	     */
 	    $t = new Schedule(4);
-	    $this->assertSame([1, 4], $t->getNextPairing());
-	    $this->assertSame([2, 3], $t->getNextPairing());
+	    $this->assertSame([1,4,1], $t->getNextPairing());
+	    $this->assertSame([2,3,1], $t->getNextPairing());
 
 	    /*
 	     * 1 2 3
 	     * - 5 4
 	     */
 	    $t = new Schedule(5);
-	    $this->assertSame([2, 5], $t->getNextPairing());
-	    $this->assertSame([3, 4], $t->getNextPairing());
+	    $this->assertSame([2,5,1], $t->getNextPairing());
+	    $this->assertSame([3,4,1], $t->getNextPairing());
 
 	    /*
 	     * 1 2 3
 	     * 6 5 4
 	     */
 	    $t = new Schedule(6);
-	    $this->assertSame([1, 6], $t->getNextPairing());
-	    $this->assertSame([2, 5], $t->getNextPairing());
-	    $this->assertSame([3, 4], $t->getNextPairing());
+	    $this->assertSame([1,6,1], $t->getNextPairing());
+	    $this->assertSame([2,5,1], $t->getNextPairing());
+	    $this->assertSame([3,4,1], $t->getNextPairing());
 	     
 	    /*
 	     * 1 2 3 4
 	     * - 7 6 5
 	     */
 	    $t = new Schedule(7);
-	    $this->assertSame([2, 7], $t->getNextPairing());
-	    $this->assertSame([3, 6], $t->getNextPairing());
-	    $this->assertSame([4, 5], $t->getNextPairing());
+	    $this->assertSame([2,7,1], $t->getNextPairing());
+	    $this->assertSame([3,6,1], $t->getNextPairing());
+	    $this->assertSame([4,5,1], $t->getNextPairing());
 	}
 	
 	public function testRotate()
@@ -65,7 +65,7 @@ class RoundRobinTest extends \PHPUnit_Framework_TestCase
 	     */
 	    $t = new RoundRobinSchedulePublicator(2);
 	    $t->rotate();
-	    $this->assertSame([1,2], $t->getNextPairing());
+	    $this->assertSame([1,2,1], $t->getNextPairing());
 	    
 	    /*
 	     * 1 2
@@ -81,12 +81,12 @@ class RoundRobinTest extends \PHPUnit_Framework_TestCase
 	     */
 	    $t = new RoundRobinSchedulePublicator(3);
 	    $t->rotate();
-	    $this->assertSame([1,3], $t->getNextPairing());
+	    $this->assertSame([1,3,1], $t->getNextPairing());
 	    
 	    $t = new RoundRobinSchedulePublicator(3);
 	    $t->rotate();
 	    $t->rotate();
-	    $this->assertSame([1,2], $t->getNextPairing());
+	    $this->assertSame([1,2,1], $t->getNextPairing());
 	    
 	    /*
 	     * 1 2 3
@@ -97,9 +97,9 @@ class RoundRobinTest extends \PHPUnit_Framework_TestCase
 	     */
 	    $t = new RoundRobinSchedulePublicator(6);
 	    $t->rotate();
-	    $this->assertSame([1,5], $t->getNextPairing());
-	    $this->assertSame([6,4], $t->getNextPairing());
-	    $this->assertSame([2,3], $t->getNextPairing());
+	    $this->assertSame([1,5,1], $t->getNextPairing());
+	    $this->assertSame([6,4,1], $t->getNextPairing());
+	    $this->assertSame([2,3,1], $t->getNextPairing());
 	}
 	
 	
@@ -110,16 +110,16 @@ class RoundRobinTest extends \PHPUnit_Framework_TestCase
 	     * - 5 4|5 4 3|4 3 2|3 2 -|2 - 5|- 5 4
 	     */
 	    $t = new RoundRobinSchedulePublicator(5);
-	    $this->assertSame([2,5], $t->getNextPairing());
-	    $this->assertSame([3,4], $t->getNextPairing());
-	    $this->assertSame([1,5], $t->getNextPairing());
-	    $this->assertSame([2,3], $t->getNextPairing());
-	    $this->assertSame([1,4], $t->getNextPairing());
-	    $this->assertSame([5,3], $t->getNextPairing());
-	    $this->assertSame([1,3], $t->getNextPairing());
-	    $this->assertSame([4,2], $t->getNextPairing());
-	    $this->assertSame([1,2], $t->getNextPairing());
-	    $this->assertSame([4,5], $t->getNextPairing());
+	    $this->assertSame([2,5,1], $t->getNextPairing());
+	    $this->assertSame([3,4,1], $t->getNextPairing());
+	    $this->assertSame([1,5,2], $t->getNextPairing());
+	    $this->assertSame([2,3,2], $t->getNextPairing());
+	    $this->assertSame([1,4,3], $t->getNextPairing());
+	    $this->assertSame([5,3,3], $t->getNextPairing());
+	    $this->assertSame([1,3,4], $t->getNextPairing());
+	    $this->assertSame([4,2,4], $t->getNextPairing());
+	    $this->assertSame([1,2,5], $t->getNextPairing());
+	    $this->assertSame([4,5,5], $t->getNextPairing());
 	     
 	    $this->assertSame(null, $t->getNextPairing());
 	    
@@ -129,22 +129,42 @@ class RoundRobinTest extends \PHPUnit_Framework_TestCase
 	     * 6 5 4|5 4 3|4 3 2|3 2 6|2 6 5|6 5 4
 	     */
 	    $t = new RoundRobinSchedulePublicator(6);
-	    $this->assertSame([1,6], $t->getNextPairing());
-	    $this->assertSame([2,5], $t->getNextPairing());
-	    $this->assertSame([3,4], $t->getNextPairing());
-	    $this->assertSame([1,5], $t->getNextPairing());
-	    $this->assertSame([6,4], $t->getNextPairing());
-	    $this->assertSame([2,3], $t->getNextPairing());
-	    $this->assertSame([1,4], $t->getNextPairing());
-	    $this->assertSame([5,3], $t->getNextPairing());
-	    $this->assertSame([6,2], $t->getNextPairing());
-	    $this->assertSame([1,3], $t->getNextPairing());
-	    $this->assertSame([4,2], $t->getNextPairing());
-	    $this->assertSame([5,6], $t->getNextPairing());
-	    $this->assertSame([1,2], $t->getNextPairing());
-	    $this->assertSame([3,6], $t->getNextPairing());
-	    $this->assertSame([4,5], $t->getNextPairing());
+	    $this->assertSame([1,6,1], $t->getNextPairing());
+	    $this->assertSame([2,5,1], $t->getNextPairing());
+	    $this->assertSame([3,4,1], $t->getNextPairing());
+	    $this->assertSame([1,5,2], $t->getNextPairing());
+	    $this->assertSame([6,4,2], $t->getNextPairing());
+	    $this->assertSame([2,3,2], $t->getNextPairing());
+	    $this->assertSame([1,4,3], $t->getNextPairing());
+	    $this->assertSame([5,3,3], $t->getNextPairing());
+	    $this->assertSame([6,2,3], $t->getNextPairing());
+	    $this->assertSame([1,3,4], $t->getNextPairing());
+	    $this->assertSame([4,2,4], $t->getNextPairing());
+	    $this->assertSame([5,6,4], $t->getNextPairing());
+	    $this->assertSame([1,2,5], $t->getNextPairing());
+	    $this->assertSame([3,6,5], $t->getNextPairing());
+	    $this->assertSame([4,5,5], $t->getNextPairing());
 	    
+	    $this->assertSame(null, $t->getNextPairing());
+	    
+	    $t->reset();
+	    
+	    $this->assertSame([1,6,1], $t->getNextPairing());
+	    $this->assertSame([2,5,1], $t->getNextPairing());
+	    $this->assertSame([3,4,1], $t->getNextPairing());
+	    $this->assertSame([1,5,2], $t->getNextPairing());
+	    $this->assertSame([6,4,2], $t->getNextPairing());
+	    $this->assertSame([2,3,2], $t->getNextPairing());
+	    $this->assertSame([1,4,3], $t->getNextPairing());
+	    $this->assertSame([5,3,3], $t->getNextPairing());
+	    $this->assertSame([6,2,3], $t->getNextPairing());
+	    $this->assertSame([1,3,4], $t->getNextPairing());
+	    $this->assertSame([4,2,4], $t->getNextPairing());
+	    $this->assertSame([5,6,4], $t->getNextPairing());
+	    $this->assertSame([1,2,5], $t->getNextPairing());
+	    $this->assertSame([3,6,5], $t->getNextPairing());
+	    $this->assertSame([4,5,5], $t->getNextPairing());
+	     
 	    $this->assertSame(null, $t->getNextPairing());
   
 	}

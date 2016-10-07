@@ -9,14 +9,6 @@ class Schedule
     private $matchesPerRound;
     private $numPlayers;
     private $roundNum = 1;
-    
-    /**
-     * @return the $roundNum
-     */
-    public function getRoundNum()
-    {
-        return $this->roundNum;
-    }
 
     /**
      * @param number $numPlayers
@@ -112,7 +104,7 @@ class Schedule
         if ($player1 == 0 || $player2 == 0) {
             return $this->getNextPairing();
         } else {
-            return [$player1, $player2];
+            return [$player1, $player2, $this->roundNum];
         }
     }
 }
