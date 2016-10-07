@@ -4,6 +4,16 @@ Classes for determining pairings for tournaments.
 
 Currently Round Robin is the only one I've written.
 
+## Getting started
+
+From the root of your application
+
+    composer require chris-moreton/uci-chess
+    
+Unless using a framework where autoloading is already taken care of, you'll need to
+
+    include 'vendor/autoload.php';
+    
     /* 
      * 5 players
      * ------------------------------------------------
